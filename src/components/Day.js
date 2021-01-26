@@ -6,6 +6,7 @@ function Day(props) {
     let mappedDay = [];
     for(let m in props.meals)
     {
+      console.log('day ' + props.meals[m]);
         mappedDay.push(<Meal time={m} foods={props.meals[m]} key={m}/>);
     }
     return (

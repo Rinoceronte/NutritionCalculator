@@ -13,8 +13,8 @@ app.post('/api/foods', fc.create);
 app.put('/api/foods/:id', fc.update);
 app.delete('/api/foods/:id', fc.delete);
 
-app.get('/api/goals', gc.read);
-app.put('/api/goals', gc.update);
+app.get('/api/goals', fc.readGoals);
+app.put('/api/goals', fc.updateGoals);
 
 const port = 3001;
 app.listen(port, () => {
