@@ -1,17 +1,35 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-class Food extends Component{
-    constructor(props)
-    {
+class Food extends Component {
+    constructor(props) {
         super(props);
-        const {id, food, calories, protein, carbohydrates, fats, serving} = props.info;
+
         this.state = {
-            id, food, calories, protein, carbohydrates, fats, serving,
+            id: 0, food: '', calories: 0, protein: 0, carbohydrates: 0, fats: 0, serving: '',
             edited: false
         }
 
         this.delete = this.delete.bind(this);
         this.confirmEdit = this.confirmEdit.bind(this);
+        this.setFood = this.setFood.bind(this)
+    }
+
+    componentDidMount() {
+        this.setFood()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.info !== this.props.info) {
+            this.setFood();
+        }
+    }
+
+    setFood() {
+        const { id, food, calories, protein, carbohydrates, fats, serving } = this.props.info;
+
+        this.setState({
+            id, food, calories, protein, carbohydrates, fats, serving
+        });
     }
 
     changeFood(val){
@@ -41,7 +59,6 @@ class Food extends Component{
     delete(e)
     {
         e.preventDefault();
-        // console.log(this.state.id);
         this.props.delete(this.state.id);
     }
     confirmEdit(e){
