@@ -67,16 +67,16 @@ class EditFoods extends Component{
             <div className="edit">
                 <Link to='/'>Home</Link>
                 <div className="foodrow-info">
-                    <h2>Food</h2>
-                    <h2>Calories</h2>
-                    <h2>Protein</h2>
-                    <h2>Carbohydrates</h2>
-                    <h2>Fats</h2>
-                    <h2>Serving</h2>
-                    <h2>Category</h2>
+                    <h2>FOOD</h2>
+                    <h2>CALORIES</h2>
+                    <h2>PROTEIN</h2>
+                    <h2>CARBOHYDRATES</h2>
+                    <h2>FATS</h2>
+                    <h2>SERVING</h2>
+                    <h2>CATEGORY</h2>
                 </div>
                 {mappedFoods}
-                <button onClick={this.addRow}>Add New Food</button>
+                <button id="new-food" onClick={this.addRow}>ADD NEW FOOD</button>
             </div>
         )
     }

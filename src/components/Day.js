@@ -10,7 +10,7 @@ function Day(props) {
     }
     return (
       <div className="day">
-        <h1>{props.day}</h1>
+        <h1>{String(props.day).toUpperCase()}</h1>
           {mappedDay}
       </div>
     );

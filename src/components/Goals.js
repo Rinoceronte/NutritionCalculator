@@ -4,16 +4,20 @@ class Goals extends Component{
     constructor(props){
         super(props);
 
-        console.log(props.goals);
+        // console.log(props.goals);
         this.state = {
             calories: props.goals.calories,
             protein: props.goals.protein,
             carbohydrates: props.goals.carbohydrates,
             fats: props.goals.fats,
-            edited: false
+            edited: false,
+            readOnly: true
         }
 
+        this.lastState = this.state;
+
         this.updateGoals = this.updateGoals.bind(this);
+        this.readonly = this.readonly.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -23,8 +27,27 @@ class Goals extends Component{
                 protein: this.props.goals.protein,
                 carbohydrates: this.props.goals.carbohydrates,
                 fats: this.props.goals.fats
-            })
+            }, () => {
+                this.lastState = this.state;
+            });
         }
+    }
+
+    readonly(){
+        if(!this.state.readOnly){
+            // console.log(this.lastState)
+            this.setState({
+                calories: this.lastState.calories,
+                protein: this.lastState.protein,
+                carbohydrates: this.lastState.carbohydrates,
+                fats: this.lastState.fats,
+                edited: false
+            });
+        }
+        else{
+            this.lastState = this.state;
+        }
+        this.setState(prevState => ({readOnly: !prevState.readOnly}));
     }
 
     changeCalories(val){
@@ -53,21 +76,24 @@ class Goals extends Component{
     }
 
     updateGoals(){
-        console.log("update?")
+        // console.log("update?")
         this.props.update(this.state);
         this.setState({
-            edited: false
+            edited: false,
+            readOnly: true,
         });
+        this.lastState = this.state;
     }
     render(){
     return(
         <section className='goalsContent'>
-            <h1>Goals</h1>
-            <label>Calories: <input type="text" onChange={e => this.changeCalories(e.target.value)} value={this.state.calories}/></label>
-            <label>Protein: <input type="text" onChange={e => this.changeProtein(e.target.value)} value={this.state.protein} /></label>
-            <label>Carbohydrates: <input type="text" onChange={e => this.changeCarbs(e.target.value)} value={this.state.carbohydrates} /></label>
-            <label>Fats: <input type="text" onChange={e => this.changeFats(e.target.value)} value={this.state.fats} /></label>
-            {this.state.edited && <button onClick={this.updateGoals}>Update</button>}
+            <h1>GOALS</h1>
+            <label>CALORIES: <input type="text" onChange={e => this.changeCalories(e.target.value)} value={this.state.calories} readOnly={this.state.readOnly}/></label>
+            <label>PROTEIN: <input type="text" onChange={e => this.changeProtein(e.target.value)} value={this.state.protein} readOnly={this.state.readOnly}/></label>
+            <label>CARBOHYDRATES: <input type="text" onChange={e => this.changeCarbs(e.target.value)} value={this.state.carbohydrates} readOnly={this.state.readOnly}/></label>
+            <label>FATS: <input type="text" onChange={e => this.changeFats(e.target.value)} value={this.state.fats} readOnly={this.state.readOnly}/></label>
+            <section className="goals-buttons"><button onClick={this.readonly}>{this.state.readOnly ? 'Enable Edit' : 'Disable Edit'}</button>
+            {this.state.edited && <button onClick={this.updateGoals}>Update</button>}</section>
         </section>
     );
 }

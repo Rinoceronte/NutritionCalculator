@@ -16,6 +16,7 @@ class Nutrition extends Component{
 
         this.updateGoals = this.updateGoals.bind(this);
         this.updateDays = this.updateDays.bind(this);
+        this.changeDays = this.changeDays.bind(this);
     }
 
     componentDidMount(){
@@ -25,12 +26,18 @@ class Nutrition extends Component{
             });
         });
 
-        console.log("here first?")
+        // console.log("here first?")
         axios.get('/api/goals').then(response => {
             this.setState({
                 goals: response.data
             });
         });
+    }
+
+    changeDays(val){
+        this.setState({
+            days: val
+        })
     }
 
     updateGoals(goals){
@@ -43,15 +50,11 @@ class Nutrition extends Component{
     }
 
     updateDays(){
-        this.setState({
-            days: document.getElementById("numberofdays").value
-        }, () => {
             axios.get(`/api/foods/${this.state.days}`).then(response => {
                 this.setState({
                     meals: response.data
                 });
-            });
-        })     
+            });  
     }
 
     render(){
@@ -62,9 +65,9 @@ class Nutrition extends Component{
                     {mappedDays}
                 </div>
                 <div className="goals">
-                    <Link to='/foods'>Edit Foods</Link>
                     <Goals update={this.updateGoals} goals={this.state.goals}/>
-                    <label>Days: </label><input type="number" id="numberofdays" /><button onClick={this.updateDays}>Go</button>
+                    <Link to='/foods'>Edit Foods</Link><br />
+                    <label>Days: </label><input type="number" id="numberofdays" onChange={e => this.changeDays(e.target.value)} value={this.state.days}/><button onClick={this.updateDays}>Go</button>
                 </div>
             </div>
         )
