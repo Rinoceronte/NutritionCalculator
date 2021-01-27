@@ -137,7 +137,8 @@ module.exports = {
             protein: req.body.food.protein || food.protein, 
             carbohydrates: req.body.food.carbohydrates || food.carbohydrates, 
             fats: req.body.food.fats || food.fats,
-            serving: req.body.food.serving || food.serving
+            serving: req.body.food.serving || food.serving,
+            category: req.body.food.category || food.category
         };
         res.status(200).send(foods);
     },
@@ -150,7 +151,7 @@ module.exports = {
         res.status(200).send(goals);
     },
     updateGoals: (req, res) => {
-        goals = {calories: req.body.calories || goals.calories, protein: req.body.protein || goals.protein, carbohydrates: req.body.carbohydrates || goals.carbohydrates, fats: req.body.fats || goals.fats};
+        goals = {calories: req.body.goals.calories || goals.calories, protein: req.body.goals.protein || goals.protein, carbohydrates: req.body.goals.carbohydrates || goals.carbohydrates, fats: req.body.goals.fats || goals.fats};
         res.status(200).send(goals);
     }
 }

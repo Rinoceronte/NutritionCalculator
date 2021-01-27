@@ -5,7 +5,7 @@ class Food extends Component {
         super(props);
 
         this.state = {
-            id: 0, food: '', calories: 0, protein: 0, carbohydrates: 0, fats: 0, serving: '',
+            id: 0, food: '', calories: 0, protein: 0, carbohydrates: 0, fats: 0, serving: '', category: '',
             edited: false
         }
 
@@ -25,10 +25,10 @@ class Food extends Component {
     }
 
     setFood() {
-        const { id, food, calories, protein, carbohydrates, fats, serving } = this.props.info;
+        const { id, food, calories, protein, carbohydrates, fats, serving, category } = this.props.info;
 
         this.setState({
-            id, food, calories, protein, carbohydrates, fats, serving
+            id, food, calories, protein, carbohydrates, fats, serving, category
         });
     }
 
@@ -56,6 +56,12 @@ class Food extends Component {
         this.setState({serving: val, edited: true});
     }
 
+    changeCategory(val){
+        this.setState({
+            category: val
+        });
+    }
+
     delete(e)
     {
         e.preventDefault();
@@ -77,6 +83,7 @@ class Food extends Component {
                     <input type="text" value={this.state.carbohydrates} onChange={e => this.changeCarbs(e.target.value)} />
                     <input type="text" value={this.state.fats} onChange={e => this.changeFats(e.target.value)} />
                     <input type="text" value={this.state.serving} onChange={e => this.changeServing(e.target.value)} />
+                    <input type="text" value={this.state.category} onChange={e => this.changeCategory(e.target.value)} />
                 </form>
                 <button onClick={this.delete}>X</button>
                 {this.state.edited && <button onClick={this.confirmEdit}>Update</button>}

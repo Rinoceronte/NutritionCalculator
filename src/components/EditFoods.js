@@ -29,12 +29,6 @@ class EditFoods extends Component{
     }
 
     edit(id, food){
-        // console.log("hmm"+food);
-        // let copyFoods = this.state.foods.slice();
-        // copyFoods.splice(copyFoods.findIndex(f => f.id === id), 1, food);
-        // this.setState({
-        //     foods: copyFoods
-        // });
         axios.put(`/api/foods/${id}`, {food}).then(response => {
             this.setState({
                 foods: response.data
@@ -79,6 +73,7 @@ class EditFoods extends Component{
                     <h2>Carbohydrates</h2>
                     <h2>Fats</h2>
                     <h2>Serving</h2>
+                    <h2>Category</h2>
                 </div>
                 {mappedFoods}
                 <button onClick={this.addRow}>Add New Food</button>
