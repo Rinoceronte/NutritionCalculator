@@ -40,8 +40,7 @@ class Nutrition extends Component{
         })
     }
 
-    updateGoals(goals){
-        
+    updateGoals(goals){  
         axios.put('/api/goals', {goals}).then(response => {
             this.setState({
                 goals: response.data
@@ -62,12 +61,13 @@ class Nutrition extends Component{
         return (
             <div className="calendar">
                 <div className="days">
+                    <header></header>
                     {mappedDays}
                 </div>
                 <div className="goals">
                     <Goals update={this.updateGoals} goals={this.state.goals}/>
                     <Link to='/foods'>Edit Foods</Link><br />
-                    <label>Days: </label><input type="number" id="numberofdays" onChange={e => this.changeDays(e.target.value)} value={this.state.days}/><button onClick={this.updateDays}>Go</button>
+                    <label>Days: </label><input type="number" id="numberofdays" min="1" max="7" onChange={e => this.changeDays(e.target.value)} value={this.state.days}/><button onClick={this.updateDays}>Go</button>
                 </div>
             </div>
         )

@@ -12,12 +12,14 @@ class EditFoods extends Component{
                 // {id: 1, food: 'Chicken', calories: 120, protein: 36, carbohydrates: 10, fats: 6, serving: '4oz'},
                 // {id: 2, food: 'Rice', calories: 230, protein: 8, carbohydrates: 40, fats: 2, serving: '1 cup'}
             ],
-            lastId: 2
+            lastId: 2,
+            sort: {column: 'food', direction: 'up'}
         }
 
         this.delete = this.delete.bind(this);
         this.edit = this.edit.bind(this);
         this.addRow = this.addRow.bind(this);
+        this.changeSort = this.changeSort.bind(this);
     }
 
     componentDidMount(){
@@ -26,6 +28,41 @@ class EditFoods extends Component{
                 foods: response.data
             });
         });
+    }
+
+    changeSort(val){
+
+        if(val !== this.state.sort.column){
+            switch(val) {
+                case 'food':
+                    this.setState({sort: {column: 'food', direction: 'down'}});
+                    break;
+                case 'calories':
+                    this.setState({sort: {column: 'calories', direction: 'down'}});
+                    break;
+                case 'protein':
+                    this.setState({sort: {column: 'protein', direction: 'down'}});
+                    break;
+                case 'carbohydrates':
+                    this.setState({sort: {column: 'carbohydrates', direction: 'down'}});
+                    break;
+                case 'fats':
+                    this.setState({sort: {column: 'fats', direction: 'down'}});
+                    break;
+                case 'serving':
+                    this.setState({sort: {column: 'serving', direction: 'down'}});
+                    break;
+                case 'category':
+                    this.setState({sort: {column: 'category', direction: 'down'}});
+                    break;
+            }
+        }
+        else {
+            let newDirection = this.state.sort.direction === 'down' ? 'up' : 'down';
+            this.setState({
+                sort: {column: val, direction: newDirection}
+            });
+        }
     }
 
     edit(id, food){
@@ -67,13 +104,14 @@ class EditFoods extends Component{
             <div className="edit">
                 <Link to='/'>Home</Link>
                 <div className="foodrow-info">
-                    <h2>FOOD</h2>
-                    <h2>CALORIES</h2>
-                    <h2>PROTEIN</h2>
-                    <h2>CARBOHYDRATES</h2>
-                    <h2>FATS</h2>
-                    <h2>SERVING</h2>
-                    <h2>CATEGORY</h2>
+                    <h2>FOOD <button onClick={e => this.changeSort('food')} 
+                        className={this.state.sort.column === 'food' ? (this.state.sort.direction === 'up' ? "headerSortUp black" : "headerSortDown black") : 'headerSortUp'} /></h2>
+                    <h2>CALORIES <button onClick={e => this.changeSort('calories')} className={this.state.sort.column === 'calories' ? (this.state.sort.direction === 'up' ? "headerSortUp black" : "headerSortDown black") : 'headerSortUp'} /></h2>
+                    <h2>PROTEIN <button onClick={e => this.changeSort('calories')} className={this.state.sort.column === 'protein' ? (this.state.sort.direction === 'up' ? "headerSortUp black" : "headerSortDown black") : 'headerSortUp'} /></h2>
+                    <h2>CARBS <button onClick={e => this.changeSort('carbohydrates')} className={this.state.sort.column === 'carbohydrates' ? (this.state.sort.direction === 'up' ? "headerSortUp black" : "headerSortDown black") : 'headerSortUp'} /></h2>
+                    <h2>FATS <button onClick={e => this.changeSort('fats')} className={this.state.sort.column === 'fats' ? (this.state.sort.direction === 'up' ? "headerSortUp black" : "headerSortDown black") : 'headerSortUp'} /></h2>
+                    <h2>SERVING <button onClick={e => this.changeSort('serving')} className={this.state.sort.column === 'serving' ? (this.state.sort.direction === 'up' ? "headerSortUp black" : "headerSortDown black") : 'headerSortUp'} /></h2>
+                    <h2>CATEGORY <button onClick={e => this.changeSort('category')} className={this.state.sort.column === 'category' ? (this.state.sort.direction === 'up' ? "headerSortUp black" : "headerSortDown black") : 'headerSortUp'} /></h2>
                 </div>
                 {mappedFoods}
                 <button id="new-food" onClick={this.addRow}>ADD NEW FOOD</button>

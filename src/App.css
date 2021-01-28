@@ -8,10 +8,20 @@ html, body{
 .App{
   height: 100vh;
   width: 100vw;
+  /* background: linear-gradient(violet, indigo, blue, green, yellow, orange, red); */
 }
 
 a {
   text-decoration: none;
+}
+
+.calendarWrapper{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 button { 
@@ -23,30 +33,92 @@ button {
 
 .calendar{
   display: flex;
+  justify-content: space-around;
+  width: 100vw;
 }
 
-.days{
-  width: 80%;
+.calendar header{
+  position: absolute;
+  background-color:#719fb0;
+  width: 76.5vw;
+  height: 9vh;
+  z-index: -1;
+}
+
+/* .days header{
+  position: absolute;
+  background-color:#719fb0;
+  width: 3.3vw;
+  height: 100%;
+  z-index: -1;
+} */
+
+.days {
+  width: 78%;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
+  border-right: 2px solid black;
+}
+
+/* .days {
+  width: 78%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-right: 2px solid black;
+} */
+
+.days div:nth-of-type(even) .meal{
+  background-color:  #719fb0;
+}
+
+.days div:nth-of-type(odd) .meal{
+  background-color: #d3e0ea;
+}
+
+.days h1{
+  color: white;
+}
+
+.meal h1{
+  color: black;
+}
+
+.day-border{
+  width: 14%;
+  height: 80vh;
+  background-color: grey;
+  border: 2px solid black;
+  z-index: -1;
 }
 
 .day {
-  height: 80vh;
   display: flex;
   flex-direction: column;
+  width: 14%;
+  height: 100vh;
   align-items: center;
-  background-color: grey;
+}
+/* .day {
+  display: flex;
+  width: 100%;
+  height: 20vh;
+} */
+
+.day h1{
+  text-align: center;
 }
 
 .meal{
   border: 2px solid black;
   width: 100%;
-  height: 16vh;
+  height: 18vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .meal ul{
@@ -70,6 +142,7 @@ button {
 
 .goals{
   width: 19%;
+  /* background: linear-gradient(red, orange, yellow, green, blue, indigo, violet); */
 }
 
 .goalsContent{
@@ -87,17 +160,6 @@ button {
   justify-content: space-between;
 }
 
-.day {
-  display: flex;
-  flex-direction: column;
-  width: 14%;
-  height: 100%;
-}
-
-.calendar {
-  display: flex;
-}
-
 .edit{
   width: 100%;
   
@@ -110,10 +172,6 @@ button {
 .edit button{
   background: transparent;
 }
-
-/* .edit {
-  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-} */
 
 .foodrow-info{
   display: flex;
@@ -137,11 +195,11 @@ button {
   width: 100%;
 }
 
-.edit div:nth-of-type(1n) input{
-  background-color: #d3e0ea 
+.edit div:nth-of-type(odd) input{
+  background-color: #d3e0ea;
 }
-.edit div:nth-of-type(2n) input{
-  background-color: #719fb0
+.edit div:nth-of-type(even) input{
+  background-color: #719fb0;
 }
 
 #new-food{
@@ -177,3 +235,66 @@ button {
   text-align: center;
   line-height: 2rem;
 }
+
+
+.foodrow-info button{
+  align-self: flex-end;
+  justify-self: flex-end;
+  text-align: center;
+}
+
+
+.headerSortDown:after,
+.headerSortUp:after{
+    content: ' ';
+    position: relative;
+    left: 10px;
+    border: 7px solid transparent;
+}
+.headerSortDown:after{
+    top: 10px;
+    border-top-color: silver;
+}
+.headerSortUp:after{
+    bottom: 15px;
+    border-bottom-color: silver;
+}
+.headerSortDown,
+.headerSortUp{
+    padding-left: 20px;
+}
+
+.black.headerSortDown:after{
+  border-top-color: black;
+}
+
+.black.headerSortUp:after{
+  border-bottom-color: black;
+}
+
+/* .arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+} */
