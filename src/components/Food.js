@@ -6,7 +6,7 @@ class Food extends Component {
 
         this.state = {
             id: 0, food: '', calories: 0, protein: 0, carbohydrates: 0, fats: 0, serving: '', category: '',
-            edited: false
+            edited: false,
         }
 
         this.delete = this.delete.bind(this);
@@ -77,13 +77,13 @@ class Food extends Component {
         return (
             <div className="food-row">
                 <form className="food-row-edit">
-                    <input type="text" value={this.state.food} onChange={e => this.changeFood(e.target.value)}/>
-                    <input type="text" value={this.state.calories} onChange={e => this.changeCalories(e.target.value)} />
-                    <input type="text" value={this.state.protein} onChange={e => this.changeProtein(e.target.value)} />
-                    <input type="text" value={this.state.carbohydrates} onChange={e => this.changeCarbs(e.target.value)} />
-                    <input type="text" value={this.state.fats} onChange={e => this.changeFats(e.target.value)} />
-                    <input type="text" value={this.state.serving} onChange={e => this.changeServing(e.target.value)} />
-                    <input type="text" value={this.state.category} onChange={e => this.changeCategory(e.target.value)} />
+                    <input type="text" value={this.state.food} onChange={e => this.changeFood(e.target.value)} readOnly={!this.props.editable} />
+                    <input type="text" value={this.state.calories} onChange={e => this.changeCalories(e.target.value)} readOnly={!this.props.editable} />
+                    <input type="text" value={this.state.protein} onChange={e => this.changeProtein(e.target.value)} readOnly={!this.props.editable} />
+                    <input type="text" value={this.state.carbohydrates} onChange={e => this.changeCarbs(e.target.value)} readOnly={!this.props.editable} />
+                    <input type="text" value={this.state.fats} onChange={e => this.changeFats(e.target.value)} readOnly={!this.props.editable} />
+                    <input type="text" value={this.state.serving} onChange={e => this.changeServing(e.target.value)} readOnly={!this.props.editable} />
+                    <input type="text" value={this.state.category} onChange={e => this.changeCategory(e.target.value)} readOnly={!this.props.editable} />
                 </form>
                 <button onClick={this.delete}>X</button>
                 {this.state.edited && <button onClick={this.confirmEdit}>Update</button>}

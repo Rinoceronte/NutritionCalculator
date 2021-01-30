@@ -24,6 +24,7 @@ let goals = {calories: 2440, protein: 225, carbohydrates: 272, fats: 91};
 
 
 function makeDay(){
+    // console.log('hmm');
     let breakfast = [];
     let snack1 = [];
     let lunch = [];
@@ -34,67 +35,189 @@ function makeDay(){
     protein = 0;
     carbohydrates = 0; 
     fats = 0;
-    while(calories < goals.calories)
-    {
-        let arr = [];
-        let food = undefined;
-        switch(meal)
-        {
+
+    let foodType = 1;
+    let proteinn = [];
+    let carbs = [];
+    let fatss = [];
+    let food = foods[Math.floor(Math.random() * foods.length)];
+    while(calories < goals.calories){
+
+        //get initial random food
+        
+        const fatsReducer = (t, f) => t += f.fats;
+        const proteinReducer = (t, f) => t += f.protein;
+        const carbReducer = (t, f) => t += f.carbohydrates;
+        const rando = () => foods[Math.floor(Math.random() * foods.length)];
+
+        //calculate total protein carbs and fats
+        protein = proteinn.reduce(proteinReducer, 0) + carbs.reduce(proteinReducer, 0) + fatss.reduce(proteinReducer, 0);
+        carbohydrates = proteinn.reduce(carbReducer, 0) + carbs.reduce(carbReducer, 0) + fatss.reduce(carbReducer, 0);
+        fats = proteinn.reduce(fatsReducer, 0) + carbs.reduce(fatsReducer, 0) + fatss.reduce(fatsReducer, 0);
+
+        //switch between proteins carbs and fats and add 1 into the appropriate array
+        switch (foodType){
             case 1:
-                arr = foods.filter(f => f.category.includes('Breakfast'));
-                food = arr[Math.floor(Math.random() * arr.length)];
-                breakfast.push(food);
-                calories += food.calories;
-                protein += food.protein;
-                carbohydrates += food.carbohydrates;
-                fats += food.fats;
-                meal = 2;
+
+            //if the protein is less than 10 on the food item, get a new food item
+            console.log('protein ' + protein + ' goals ' + goals.protein);
+            if(protein < goals.protein)
+                {
+                    while(food.protein < 10) {
+                        food = rando();
+                        // console.log('protein ' +food.protein)
+                    }
+                
+                    proteinn.push(food)
+                    calories += food.calories;
+                }
+                foodType = 2;
                 break;
             case 2:
-                arr = foods.filter(f => f.category.includes('Snack'));
-                food = arr[Math.floor(Math.random() * arr.length)];
-                snack1.push(food);
-                calories += food.calories;
-                protein += food.protein;
-                carbohydrates += food.carbohydrates;
-                fats += food.fats;
-                meal = 3;
+                console.log('carbs ' + carbohydrates + ' goals ' + goals.carbohydrates);
+                while(food.carbohydrates < 10) {
+                    
+                    food = rando();
+                    // console.log('carb ' +food.carbohydrates);
+                }
+                // console.log('carbohydrates ' +carbohydrates);
+                // console.log('goal ' + goals.carbohydrates);
+                if(carbohydrates < goals.carbohydrates)
+                {
+                    // console.log('ever get here?');
+                    carbs.push(food)
+                    calories += food.calories;
+                }
+                foodType = 3;
                 break;
             case 3:
-                arr = foods.filter(f => f.category.includes('Lunch'));
-                food = arr[Math.floor(Math.random() * arr.length)];
-                lunch.push(food);
-                calories += food.calories;
-                protein += food.protein;
-                carbohydrates += food.carbohydrates;
-                fats += food.fats;
-                meal = 4;
-                break;
-            case 4:
-                arr = foods.filter(f => f.category.includes('Snack'));
-                food = arr[Math.floor(Math.random() * arr.length)];
-                snack2.push(food);
-                calories += food.calories;
-                protein += food.protein;
-                carbohydrates += food.carbohydrates;
-                fats += food.fats;
-                meal = 5;
-                break;
-            case 5:
-                arr = foods.filter(f => f.category.includes('Dinner'));
-                food = arr[Math.floor(Math.random() * arr.length)];
-                dinner.push(food);
-                calories += food.calories;
-                protein += food.protein;
-                carbohydrates += food.carbohydrates;
-                fats += food.fats;
-                meal = 1;
-                break;
-            default:
-                meal = 1;
+                console.log('cats ' + fats + ' goals ' + goals.fats);
+                while(food.fats < 5)
+                {
+                    food = rando();
+                }
+                if(fats < goals.fats)
+                {
+                    fatss.push(food)
+                    calories += food.calories;
+                }
+                foodType = 1;
                 break;
         }
     }
+
+    // console.log('protin ' + proteinn);
+    // console.log('carbs ' + carbs);
+    // console.log('fats ' + fatss);
+
+    for(let i = 0;i<proteinn.length;i++)
+    {
+        if(proteinn[i].category.includes('Breakfast')){
+            breakfast.push(proteinn[i]);
+        }
+        else if(proteinn[i].category.includes('Lunch') || proteinn[i].category.includes('Dinner')) {
+            dinner.length > lunch.length ? lunch.push(proteinn[i]) : dinner.push(proteinn[i]);     
+        }
+        else if(proteinn[i].category.includes('Snack')){
+            snack1.length > snack2.length ? snack2.push(proteinn[i]) : snack1.push(proteinn[i])
+        }
+    }
+
+    for(let i = 0;i<carbs.length;i++)
+    {
+        if(carbs[i].category.includes('Breakfast')){
+            breakfast.push(carbs[i]);
+        }
+        else if(carbs[i].category.includes('Lunch') || carbs[i].category.includes('Dinner')) {
+            dinner.length > lunch.length ? lunch.push(carbs[i]) : dinner.push(carbs[i]);
+            
+        }
+        else if(carbs[i].category.includes('Snack')){
+            snack1.length > snack2.length ? snack2.push(carbs[i]) : snack1.push(carbs[i])
+        }
+    }
+
+    for(let i = 0;i<fatss.length;i++)
+    {
+        
+            if(fatss[i].category.includes('Breakfast')){
+                breakfast.push(fatss[i]);
+            }
+            else if(fatss[i].category.includes('Lunch') || fatss[i].category.includes('Dinner')) {
+                dinner.length > lunch.length ? lunch.push(fatss[i]) : dinner.push(fatss[i]);
+                
+            }
+            else if(fatss[i].category.includes('Snack')){
+                snack1.length > snack2.length ? snack2.push(fatss[i]) : snack1.push(fatss[i])
+            }
+    }
+    //looking for protein ... add protein
+    //Looking for Carbohydrates ... add carb
+    //Looking for fats... add fats
+
+
+
+    // while(calories < goals.calories)
+    // {
+    //     let arr = [];
+    //     let food = undefined;
+    //     switch(meal)
+    //     {
+    //         case 1:
+    //             arr = foods.filter(f => f.category.includes('Breakfast'));
+    //             food = arr[Math.floor(Math.random() * arr.length)];
+    //             breakfast.push(food);
+    //             calories += food.calories;
+    //             protein += food.protein;
+    //             carbohydrates += food.carbohydrates;
+    //             fats += food.fats;
+    //             meal = 2;
+    //             break;
+    //         case 2:
+    //             arr = foods.filter(f => f.category.includes('Snack'));
+    //             food = arr[Math.floor(Math.random() * arr.length)];
+    //             snack1.push(food);
+    //             calories += food.calories;
+    //             protein += food.protein;
+    //             carbohydrates += food.carbohydrates;
+    //             fats += food.fats;
+    //             meal = 3;
+    //             break;
+    //         case 3:
+    //             arr = foods.filter(f => f.category.includes('Lunch'));
+    //             food = arr[Math.floor(Math.random() * arr.length)];
+    //             lunch.push(food);
+    //             calories += food.calories;
+    //             protein += food.protein;
+    //             carbohydrates += food.carbohydrates;
+    //             fats += food.fats;
+    //             meal = 4;
+    //             break;
+    //         case 4:
+    //             arr = foods.filter(f => f.category.includes('Snack'));
+    //             food = arr[Math.floor(Math.random() * arr.length)];
+    //             snack2.push(food);
+    //             calories += food.calories;
+    //             protein += food.protein;
+    //             carbohydrates += food.carbohydrates;
+    //             fats += food.fats;
+    //             meal = 5;
+    //             break;
+    //         case 5:
+    //             arr = foods.filter(f => f.category.includes('Dinner'));
+    //             food = arr[Math.floor(Math.random() * arr.length)];
+    //             dinner.push(food);
+    //             calories += food.calories;
+    //             protein += food.protein;
+    //             carbohydrates += food.carbohydrates;
+    //             fats += food.fats;
+    //             meal = 1;
+    //             break;
+    //         default:
+    //             meal = 1;
+    //             break;
+    //     }
+    // }
     return {
         breakfast: breakfast,
         snack1: snack1,
@@ -103,6 +226,7 @@ function makeDay(){
         dinner: dinner
     }
 }
+
 
 function sortMeals(days){
    let day = 1;
