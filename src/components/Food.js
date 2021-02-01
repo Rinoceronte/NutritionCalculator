@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import Select from 'react-select';
 
 class Food extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            id: 0, food: '', calories: 0, protein: 0, carbohydrates: 0, fats: 0, serving: '', category: '',
+            id: 0, food: '', calories: 0, protein: 0, carbohydrates: 0, fats: 0, serving: '', category: [],
             edited: false,
         }
 
         this.delete = this.delete.bind(this);
         this.confirmEdit = this.confirmEdit.bind(this);
         this.setFood = this.setFood.bind(this)
+        this.addCategory = this.addCategory.bind(this);
+        this.removeCategory = this.removeCategory.bind(this);
     }
 
     componentDidMount() {
@@ -57,8 +60,26 @@ class Food extends Component {
     }
 
     changeCategory(val){
+        console.log(val);
+        let categories = val.map(c => c.value);
+        console.log(categories);
+       
+        this.setState(prevState => ({
+            category: categories, edited: true
+        }));
+    }
+
+    addCategory(selectedList, selectedItem) { 
         this.setState({
-            category: val
+            category: [...this.state.category, selectedItem]
+        });
+    }
+
+    removeCategory(selectedList, removedItem) {
+        let arr = this.state.category.slice();
+        arr.splice(arr.findIndex(c => c === removedItem));
+        this.setState({
+            category: arr
         });
     }
 
@@ -67,6 +88,7 @@ class Food extends Component {
         e.preventDefault();
         this.props.delete(this.state.id);
     }
+
     confirmEdit(e){
         e.preventDefault();
         this.setState({edited: false});
@@ -83,7 +105,8 @@ class Food extends Component {
                     <input type="text" value={this.state.carbohydrates} onChange={e => this.changeCarbs(e.target.value)} readOnly={!this.props.editable} />
                     <input type="text" value={this.state.fats} onChange={e => this.changeFats(e.target.value)} readOnly={!this.props.editable} />
                     <input type="text" value={this.state.serving} onChange={e => this.changeServing(e.target.value)} readOnly={!this.props.editable} />
-                    <input type="text" value={this.state.category} onChange={e => this.changeCategory(e.target.value)} readOnly={!this.props.editable} />
+                    {/* <input type="text" value={this.state.category} onChange={e => this.changeCategory(e.target.value)} readOnly={!this.props.editable} /> */}
+                    <div><Select width="200px" options={[{value: 'Breakfast', label: 'Breakfast'}, {value: 'Lunch', label: 'Lunch'}, {value: 'Dinner', label: 'Dinner'}, {value: 'Snack', label: 'Snack'}]} onChange={e => this.changeCategory(e)} isMulti isDisabled={!this.props.editable}/></div>
                 </form>
                 <button onClick={this.delete}>X</button>
                 {this.state.edited && <button onClick={this.confirmEdit}>Update</button>}

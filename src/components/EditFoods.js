@@ -103,8 +103,7 @@ class EditFoods extends Component{
             axios.post('/api/foods', {id: -1, food: '', calories: 0, protein: 0, carbohydrates: 0, fats: 0, serving: ''}).then( response => {
                 this.setState({foods: response.data});
             });
-        }
-        
+        } 
     }
 
     render(){
