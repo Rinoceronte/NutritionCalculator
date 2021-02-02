@@ -61,12 +61,19 @@ class Food extends Component {
 
     changeCategory(val){
         console.log(val);
-        let categories = val.map(c => c.value);
-        console.log(categories);
-       
-        this.setState(prevState => ({
-            category: categories, edited: true
-        }));
+       if(!this.state.category.includes(val)){
+            this.setState({
+                category: [...this.state.category, val], edited: true
+            });
+        }
+        else{
+            let copy = this.state.category.slice();
+            let index = copy.findIndex(c => c === val);
+            copy.splice(index, 1);
+            this.setState({
+                category: copy, edited: true
+            });
+        }
     }
 
     addCategory(selectedList, selectedItem) { 
@@ -96,6 +103,7 @@ class Food extends Component {
     }
 
     render(){
+        let options = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
         return (
             <div className="food-row">
                 <form className="food-row-edit">
@@ -105,8 +113,14 @@ class Food extends Component {
                     <input type="text" value={this.state.carbohydrates} onChange={e => this.changeCarbs(e.target.value)} readOnly={!this.props.editable} />
                     <input type="text" value={this.state.fats} onChange={e => this.changeFats(e.target.value)} readOnly={!this.props.editable} />
                     <input type="text" value={this.state.serving} onChange={e => this.changeServing(e.target.value)} readOnly={!this.props.editable} />
+                    <select multiple={true} value={this.state.category} onChange={e => this.changeCategory(e.target.value)}>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Snack">Snack</option>
+                    </select>
                     {/* <input type="text" value={this.state.category} onChange={e => this.changeCategory(e.target.value)} readOnly={!this.props.editable} /> */}
-                    <div><Select width="200px" options={[{value: 'Breakfast', label: 'Breakfast'}, {value: 'Lunch', label: 'Lunch'}, {value: 'Dinner', label: 'Dinner'}, {value: 'Snack', label: 'Snack'}]} onChange={e => this.changeCategory(e)} isMulti isDisabled={!this.props.editable}/></div>
+                    {/* <div><Select width="200px" options={[{value: 'Breakfast', label: 'Breakfast'}, {value: 'Lunch', label: 'Lunch'}, {value: 'Dinner', label: 'Dinner'}, {value: 'Snack', label: 'Snack'}]} onChange={e => this.changeCategory(e)} isMulti isDisabled={!this.props.editable} value={this.state.category}/></div> */}
                 </form>
                 <button onClick={this.delete}>X</button>
                 {this.state.edited && <button onClick={this.confirmEdit}>Update</button>}

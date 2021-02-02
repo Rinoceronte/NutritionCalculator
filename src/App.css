@@ -202,6 +202,13 @@ button {
   background-color: #719fb0;
 }
 
+.edit div:nth-of-type(odd) select{
+  background-color: #d3e0ea;
+}
+.edit div:nth-of-type(even) select{
+  background-color: #719fb0;
+}
+
 #new-food{
   background-color: #e8ffc1;
   margin: 1%;
@@ -227,6 +234,20 @@ button {
 
 .food-row button{
   border: none;
+}
+
+.food-row-edit select{
+  border-left: 2px dotted grey;
+  border-top: transparent;
+  border-right: transparent;
+  border-bottom: transparent;
+  width: 16%;
+  text-align: center;
+  line-height: 2rem;
+}
+
+.food-row-edit select:nth-of-type(even){
+
 }
 
 .food-row button:nth-of-type(2){
