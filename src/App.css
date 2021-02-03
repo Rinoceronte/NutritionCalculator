@@ -208,6 +208,23 @@ button {
 .edit div:nth-of-type(even) select{
   background-color: #719fb0;
 }
+/* option:hover,
+option:focus,
+option:active,
+option:checked {
+  background: linear-gradient(#5A2569, #5A2569);
+}
+select option {
+  color: black;
+}
+select:not(:checked) {
+  color: gray;
+}
+
+.category-options option:checked{
+  background-color: fuchsia;
+  color: green;
+} */
 
 #new-food{
   background-color: #e8ffc1;
@@ -246,9 +263,6 @@ button {
   line-height: 2rem;
 }
 
-.food-row-edit select:nth-of-type(even){
-
-}
 
 .food-row button:nth-of-type(2){
   border: none;
