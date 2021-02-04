@@ -26,7 +26,7 @@ class EditFoods extends Component{
             this.setState({
                 foods: response.data
             });
-        });
+        }).catch(err => console.log(err));
     }
 
     changeSort(val){
@@ -87,13 +87,13 @@ class EditFoods extends Component{
             this.setState({
                 foods: response.data
             });
-        });
+        }).catch(err => console.log(err));
     }
 
     delete(id){
         axios.delete(`/api/foods/${id}`).then(response => {
             this.setState({foods: response.data});
-        });
+        }).catch(err => console.log(err));
     }
 
     addRow(e)
@@ -102,7 +102,7 @@ class EditFoods extends Component{
         if(this.state.editable){
             axios.post('/api/foods', {id: -1, food: '', calories: 0, protein: 0, carbohydrates: 0, fats: 0, serving: ''}).then( response => {
                 this.setState({foods: response.data});
-            });
+            }).catch(err => console.log(err));
         } 
     }
 

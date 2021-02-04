@@ -24,14 +24,14 @@ class Nutrition extends Component{
             this.setState({
                 meals: response.data
             });
-        });
+        }).catch(err => console.log(err));
 
         // console.log("here first?")
         axios.get('/api/goals').then(response => {
             this.setState({
                 goals: response.data
             });
-        });
+        }).catch(err => console.log(err));
     }
 
     changeDays(val){
@@ -45,7 +45,7 @@ class Nutrition extends Component{
             this.setState({
                 goals: response.data
             });
-        })
+        }).catch(err => console.log(err));
     }
 
     updateDays(){
@@ -53,7 +53,7 @@ class Nutrition extends Component{
                 this.setState({
                     meals: response.data
                 });
-            });  
+            }).catch(err => console.log(err));  
     }
 
     render(){
