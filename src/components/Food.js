@@ -157,7 +157,7 @@ class Food extends Component {
         let options = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
         return (
             <div className="food-row" >
-                <form className="food-row-edit" >
+                <form className="food-row-edit" onBlur={this.confirmChanges} >
                     <input type="text" value={this.state.food} onChange={e => this.changeFood(e.target.value)} readOnly={!this.props.editable} />
                     <input type="text" value={this.state.calories} onChange={e => this.changeCalories(e.target.value)} readOnly={!this.props.editable} />
                     <input type="text" value={this.state.protein} onChange={e => this.changeProtein(e.target.value)} readOnly={!this.props.editable} />
